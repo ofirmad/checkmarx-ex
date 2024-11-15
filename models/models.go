@@ -22,13 +22,6 @@ type Task struct {
 	CreatedAt   time.Time `json:"created_at"`
 }
 
-type TaskService interface {
-	CreateTask(task Task) (Task, error)
-	GetTaskByID(id int) (Task, error)
-	UpdateTask(id int, updated Task) (Task, error)
-	DeleteTask(id int) error
-}
-
 // Database represents the in-memory storage
 type Database struct {
 	Tasks  map[int]*Task
