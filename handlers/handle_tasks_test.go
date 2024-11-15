@@ -134,6 +134,18 @@ var _ = Describe("Handle Tasks Tests", func() {
 			Expect(response.Code).To(Equal(http.StatusBadRequest))
 			Expect(response.Body.String()).To(ContainSubstring(statusRequired))
 		})
+
+		It("should fail to create a new task with invalid request payload - invalid status", func() {
+			task := models.Task{
+				Title:       "New Task",
+				Description: "Task Description",
+				Status:      "Invalid",
+			}
+
+			response := performRequest(http.MethodPost, tasksPath, task)
+			Expect(response.Code).To(Equal(http.StatusBadRequest))
+			Expect(response.Body.String()).To(ContainSubstring(invalidStatus))
+		})
 	})
 })
 
@@ -252,6 +264,30 @@ var _ = Describe("Handle Task By ID Tests", func() {
 			response := performRequest(http.MethodPut, tasksPath+"/"+strconv.Itoa(newTask.ID), updatedTask)
 			Expect(response.Code).To(Equal(http.StatusBadRequest))
 			Expect(response.Body.String()).To(ContainSubstring(statusRequired))
+
+			// get the task to verify it was not updated
+			response = performRequest(http.MethodGet, tasksPath+"/"+strconv.Itoa(newTask.ID), nil)
+			Expect(response.Code).To(Equal(http.StatusOK))
+
+			var responseBody map[string]interface{}
+			json.Unmarshal(response.Body.Bytes(), &responseBody)
+
+			testutils.ValidateResponse(newTask, responseBody)
+			testutils.ValidateIDAndCreatedAt(newTask, responseBody)
+		})
+
+		It("should fail to update a task by ID dut to invalid request payload - invalid status", func() {
+			newTask := services.CreateTask(task)
+
+			updatedTask := models.Task{
+				Title:       "Updated Task",
+				Description: "Updated Task Description",
+				Status:      "Invalid",
+			}
+
+			response := performRequest(http.MethodPut, tasksPath+"/"+strconv.Itoa(newTask.ID), updatedTask)
+			Expect(response.Code).To(Equal(http.StatusBadRequest))
+			Expect(response.Body.String()).To(ContainSubstring(invalidStatus))
 
 			// get the task to verify it was not updated
 			response = performRequest(http.MethodGet, tasksPath+"/"+strconv.Itoa(newTask.ID), nil)

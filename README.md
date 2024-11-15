@@ -52,6 +52,7 @@ type Database struct {
 
 ### Assumptions
 * All fields (title, description and status) are required for task creation/update.
+* Task status can be one of the following: "TODO", "in-progress", "Pending" or "Completed".
 
 ## Implementation Plan - Backend
 
@@ -84,3 +85,22 @@ type Database struct {
 * `DELETE /tasks/{id}`: Delete a task by ID
     * **Test Case 1**: Task exists and is deleted
     * **Test Case 2**: Task does not exist (404 response)
+
+## Design - Frontend
+
+I chose to use vite as the frontend framework for this project. I chose vite I read that it is a faster alternative to create-react-app.
+
+### Components
+* `TaskList`: Display a list of tasks
+* `TaskForm`: Form to create or update a task
+
+### UI Design
+* Title: Task Manager
+* Task List:
+    * Display task id, title, description and status.
+    * Provide buttons to edit and delete each task.
+* Task Form:
+    * Input fields for title, description, and status (dropdown).
+    * Submit button to create or update a task.
+    * Cancel button to clear the form.
+

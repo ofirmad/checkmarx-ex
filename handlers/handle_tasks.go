@@ -11,10 +11,13 @@ import (
 	"strings"
 )
 
+var validStatuses = []string{"TODO", "in-progress", "Pending", "Completed"}
+
 const (
 	titleRequired       = "title is required"
 	descriptionRequired = "description is required"
 	statusRequired      = "status is required"
+	invalidStatus       = "invalid status. Valid statuses are: TODO, in-progress, Pending, Completed"
 )
 
 func HandleTasks(w http.ResponseWriter, r *http.Request) {
@@ -101,5 +104,17 @@ func validateTask(task models.Task) error {
 	if task.Status == "" {
 		return errors.New(statusRequired)
 	}
+	if !comtains(validStatuses, task.Status) {
+		return errors.New(invalidStatus)
+	}
 	return nil
+}
+
+func comtains(statuses []string, status string) bool {
+	for _, s := range statuses {
+		if s == status {
+			return true
+		}
+	}
+	return false
 }
