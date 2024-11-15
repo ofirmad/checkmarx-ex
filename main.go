@@ -13,6 +13,26 @@ func main() {
 	mux.HandleFunc("/tasks", handlers.HandleTasks)
 	mux.HandleFunc("/tasks/", handlers.HandleTaskByID)
 
+	// Wrap the mux with the CORS middleware
+	handler := corsMiddleware(mux)
+
 	fmt.Println("Server is running on http://localhost:8080")
-	http.ListenAndServe(":8080", mux)
+	http.ListenAndServe(":8080", handler)
+}
+
+// corsMiddleware sets the CORS headers
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+		// Handle preflight requests
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
 }
