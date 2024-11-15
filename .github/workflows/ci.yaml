@@ -56,3 +56,11 @@ jobs:
         run: |
           docker build -t task-manager-backend ./backend
           docker build -t task-manager-frontend ./frontend
+
+      - name: Lint Frontend Code
+        working-directory: ./react-app
+        run: npm run lint
+
+      - name: Lint Backend Code
+        working-directory: .
+        run: golangci-lint run
