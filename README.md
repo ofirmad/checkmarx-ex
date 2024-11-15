@@ -57,11 +57,10 @@ type Database struct {
 
 ### Project Structure
 * `main.go`: Entry point for the application.
-* `handlers.go`: Request handlers for each endpoint.
-* `models.go`: Task struct definition and in-memory storage.
-* `utils.go`: Helper functions for request parsing and response writing.
-* `services.go`: Business logic for task creation, retrieval, update, and deletion.
-* `tests/`: Unit tests for each endpoint and service function.
+* `handlers/handle_tasks.go`: Request handlers for each endpoint.
+* `models/models.go`: Task struct definition and in-memory storage.
+* `utils/response.go`: Helper functions for request parsing and response writing.
+* `services/task_service.go`: Business logic for task creation, retrieval, update, and deletion.
 
 ### Endpoints Testing
 * `GET /tasks`: Get all tasks
