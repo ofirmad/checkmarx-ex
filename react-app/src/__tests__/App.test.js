@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+import React from 'react';
+/* eslint-enable no-unused-vars */
 import { render, screen, act, fireEvent, waitFor } from '@testing-library/react';
 import App from '../App';
 import * as api from '../api/tasks';
