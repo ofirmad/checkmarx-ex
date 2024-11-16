@@ -46,7 +46,7 @@ jobs:
 
       - name: Install golangci-lint
         run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.50.1
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.54.2
 
       - name: Lint Frontend Code
         working-directory: ./react-app
@@ -54,7 +54,7 @@ jobs:
 
       - name: Lint Backend Code
         working-directory: .
-        run: golangci-lint run
+        run: golangci-lint run --timeout=5m
 
       - name: Run Frontend Tests
         working-directory: ./react-app
