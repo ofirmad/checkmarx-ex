@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+import React from 'react';
+/* eslint-enable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { fetchTasks, addTask, updateTask, deleteTask } from './api/tasks';
 import TaskList from './components/TaskList';
