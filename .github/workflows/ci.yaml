@@ -44,6 +44,10 @@ jobs:
         working-directory: .
         run: go mod tidy
 
+      - name: Install golangci-lint
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.50.1
+
       - name: Lint Frontend Code
         working-directory: ./react-app
         run: npm run lint
