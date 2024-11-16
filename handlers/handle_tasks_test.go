@@ -18,7 +18,7 @@ func TestRequester(t *testing.T) {
 	RegisterFailHandler(Fail)
 	suiteConfig, reporterConfig := GinkgoConfiguration()
 	reporterConfig.JUnitReport = "tests.xml"
-	RunSpecs(t, "Handle Tasks", suiteConfig, reporterConfig)
+	RunSpecs(t, "Handle Tasks Suite", suiteConfig, reporterConfig)
 }
 
 const (
@@ -185,10 +185,8 @@ var _ = Describe("Handle Task By ID Tests", func() {
 
 	Describe("PUT /tasks/{id}", func() {
 		It("should successfully update a task by ID", func() {
-			// add a task
 			newTask := services.CreateTask(task)
 
-			// update the task
 			updatedTask := models.Task{
 				Title:       "Updated Task",
 				Description: "Updated Task Description",
@@ -340,7 +338,6 @@ func performRequest(method, path string, body interface{}) *httptest.ResponseRec
 	req := httptest.NewRequest(method, path, bytes.NewBuffer(requestBody))
 	req.Header.Set("Content-Type", "application/json")
 
-	// Use the actual handlers from the app
 	w := httptest.NewRecorder()
 	if path == tasksPath {
 		HandleTasks(w, req)
